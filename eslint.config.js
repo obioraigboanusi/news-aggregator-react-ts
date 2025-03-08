@@ -5,9 +5,9 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', "node_modules", ".pnp*"] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, 'prettier'],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended,  'plugin:prettier/recommended' ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
