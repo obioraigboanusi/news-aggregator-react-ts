@@ -6,7 +6,7 @@ interface IProps {
 
 function NewsCard({ item }: IProps) {
   return (
-    <div className="border-b border-gray-200 py-4 lg:flex max-w-100 lg:max-w-[unset] gap-4">
+    <div className="py-4 lg:flex max-w-100 lg:max-w-[unset] gap-4">
       <div className="">
         <img
           src={item.bannerUrl}

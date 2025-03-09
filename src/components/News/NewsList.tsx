@@ -1,28 +1,13 @@
-import { useMemo } from 'react';
-import useNewsApi from '@/hooks/useNewsApi';
-import useGNews from '@/hooks/useGNews';
+import useArticles from '@/hooks/useArticles';
 import NewsCard from './NewsCard';
-import useNYTimes from '@/hooks/useNYTimes';
 
 function NewsList() {
-  const { data } = useNewsApi();
-  const { data: gData } = useGNews();
-  const { data: nytData } = useNYTimes();
-
-  const articles = useMemo(
-    () => [
-      ...(data?.articles || []),
-      ...(gData?.articles || []),
-      ...(nytData?.articles || []),
-    ],
-    [data?.articles, gData?.articles, nytData?.articles]
-  );
-
+  const { articles } = useArticles();
   return (
     <div>
       <ul>
         {articles?.map((item: IArticleItem) => (
-          <li key={item.id}>
+          <li key={item.id} className="border-b border-gray-200 pe-5 ">
             <NewsCard item={item} />
           </li>
         ))}

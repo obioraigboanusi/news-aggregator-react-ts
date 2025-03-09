@@ -63,14 +63,16 @@ axiosInstance.interceptors.response.use(
 export async function getFromNewsApi(params?: {
   query?: string;
   startDate?: string;
+  category?: string;
 }) {
-  const { query: q, startDate: from } = params || {};
+  const { query: q, startDate: from, category } = params || {};
 
   const res = await axiosInstance.get<IApiResponse>('/top-headlines', {
     params: {
       apiKey: import.meta.env.VITE_NEWS_API_KEY,
       sortBy: 'popularity',
       sources: 'bbc-news',
+      category,
       from,
       q,
       page: 1,
