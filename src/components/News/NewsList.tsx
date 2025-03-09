@@ -4,6 +4,7 @@ import ArticleCardLoader from '../ArticleCardLoader';
 import { IArticleItem } from '@/utils/querytypes';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useEffect } from 'react';
+import { isEmpty } from 'lodash';
 
 function NewsList() {
   const { articles, isLoading, loadMore, hasMore } = useArticles();
@@ -27,6 +28,9 @@ function NewsList() {
           </li>
         ))}
       </ul>
+      {isEmpty(articles) && !isLoading && !isFetching && (
+        <p className="mt-20 text-center italic">No articles found.</p>
+      )}
       {isLoading && (
         <ul>
           {Array.from({ length: 10 }).map((_, i) => (

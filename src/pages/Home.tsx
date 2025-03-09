@@ -12,7 +12,7 @@ function Home() {
   const [categoryValue] = useQueryState('category');
 
   return (
-    <section className="">
+    <section className="h-full flex flex-col">
       <div className="bg-gray-100">
         <div className="container mx-auto py-20 text-center ">
           <h1 className="text-4xl font-bold text-gray-900 ">
@@ -23,13 +23,13 @@ function Home() {
           </p>
         </div>
       </div>
-      <div className="relative">
+      <div className="relative grow flex flex-col">
         <div className="border-b border-gray-200 bg-gray-100 sticky top-0 backdrop-blur-lg z-50">
           <div className="container py-4">
             <CategoryFilter />
           </div>
         </div>
-        <div className="flex justify-stretch items-stretch container relative">
+        <div className="flex justify-stretch items-stretch container relative grow">
           <div className="flex-1">
             <div className="border-b border-gray-200 py-2 flex justify-between items-center pe-5">
               <SearchForm />
