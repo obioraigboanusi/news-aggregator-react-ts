@@ -8,6 +8,7 @@ function Navbar() {
           <img
             src="https://www.freeiconspng.com/uploads/inspiration-icon-4.jpg"
             width="40"
+            height="40"
             alt="Svg Icon Inspiration"
           />
           <span className="font-bold">NewsInnoscripts</span>

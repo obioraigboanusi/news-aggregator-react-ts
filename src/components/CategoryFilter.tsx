@@ -13,7 +13,7 @@ const CategoryFilter = () => {
   const [value, setValue] = useQueryState('category');
   return (
     <div>
-      <ul className="flex gap-x-3">
+      <ul className="flex flex-wrap gap-3">
         {categories.map((category) => (
           <li key={category.name}>
             <button
