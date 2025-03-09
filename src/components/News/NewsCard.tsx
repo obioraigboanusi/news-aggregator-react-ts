@@ -11,6 +11,7 @@ function NewsCard({ item }: IProps) {
         <img
           src={item.bannerUrl}
           alt={item.title}
+          loading="lazy"
           className="w-full lg:w-40 aspect-[4/3] rounded"
         />
       </div>
