@@ -1,7 +1,7 @@
 const ArticleCardLoader = () => {
   return (
-    <div className="py-4 lg:flex max-w-100 lg:max-w-[unset] gap-4 animate-pulse">
-      <div className="w-full lg:w-40 aspect-[4/3] bg-gray-300 rounded" />
+    <div className="py-4 md:flex max-w-100 md:max-w-[unset] gap-4 animate-pulse">
+      <div className="w-full md:w-40 aspect-[4/3] bg-gray-300 rounded" />
       <div className="flex-1 flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-center">

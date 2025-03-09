@@ -6,13 +6,13 @@ interface IProps {
 
 function NewsCard({ item }: IProps) {
   return (
-    <div className="py-4 lg:flex max-w-100 lg:max-w-[unset] gap-4">
+    <div className="py-4 md:flex gap-4 w-full">
       <div className="">
         <img
           src={item.bannerUrl}
           alt={item.title}
           loading="lazy"
-          className="w-full lg:w-40 aspect-[4/3] rounded"
+          className="w-full md:w-40 aspect-[4/3] rounded"
         />
       </div>
       <div className="flex-1 inline-flex flex-col justify-between">
@@ -22,7 +22,7 @@ function NewsCard({ item }: IProps) {
             {/* <p className="text-sm capitalize">{item.category}</p> */}
           </div>
           <a href={item.url} target="_blank" rel="noopener noreferrer">
-            <h3 className="font-bold leading-tight text-lg md:text-xl lg:text-xl hover:text-purple-500">
+            <h3 className="font-bold leading-tight text-lg md:text-xl md:text-xl hover:text-purple-500">
               {item.title}
             </h3>
           </a>

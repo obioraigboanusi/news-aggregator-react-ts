@@ -15,9 +15,9 @@ function NewsList() {
   }
   return (
     <div>
-      <ul>
+      <ul className="grid grid-cols-1">
         {articles?.map((item: IArticleItem) => (
-          <li key={item.id} className="border-b border-gray-200 pe-5 ">
+          <li key={item.id} className="border-b border-gray-200 md:pe-5 ">
             <NewsCard item={item} />
           </li>
         ))}
