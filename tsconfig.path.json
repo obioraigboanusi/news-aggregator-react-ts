@@ -2,7 +2,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@services*": ["src/services/*"],
+      "@assets*": ["src/assets/*"]
+    },
+    "module": "ESNext",
+    "moduleResolution": "Node"
   }
 }
