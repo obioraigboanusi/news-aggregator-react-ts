@@ -1,54 +1,77 @@
-# React + TypeScript + Vite
+# NewsInnoscripts - Dockerized React Vite App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NewsInnoscripts is a **news aggregator app** that pulls data from **New York Times, NewsAPI.org, and GNews.io**. Users can **search by keyword**, and **filter by date, source, and category**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **📌 Prerequisites**
+- [Node.js](https://nodejs.org/) (Latest LTS)
+- [Yarn 4](https://yarnpkg.com/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## **🛠️ Setup & Run**
+### **1️⃣ Clone the Repository**
+```sh
+git clone https://github.com/obioraigboanusi/news-aggregator-react-ts.git
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+cd news-aggregator-react-ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### **2️⃣ Install Dependencies**
+```sh
+yarn install
 ```
+
+### **3️⃣ Configure Environment Variables**
+Create a `.env` file:
+```env
+VITE_NEWS_API_KEY=value
+VITE_NEWS_API_URL=value
+
+VITE_GNEWS_API_KEY=value
+VITE_GNEWS_API_URL=value
+
+VITE_NYTIMES_API_KEY=value
+VITE_NYTIMES_API_URL=value
+```
+
+---
+
+## **🐳 Docker Instructions**
+### **1️⃣ Build & Run with Docker**
+```sh
+docker build -t newsinnoscripts .
+docker run --env-file .env -p 4173:4173 newsinnoscripts
+```
+
+### **2️⃣ Using Docker Compose (Recommended)**
+#### **a. Start the Application**
+```sh
+docker-compose up --build
+```
+
+#### **b. Stop the Application**
+```sh
+docker-compose down
+```
+
+---
+
+## **📦 Running Locally (Without Docker)**
+For development:
+```sh
+yarn dev
+```
+For production build:
+```sh
+yarn build && yarn preview
+```
+
+---
+
+**Regards**
+
+## **Obiora**
