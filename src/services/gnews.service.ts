@@ -58,7 +58,7 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export async function getFromGuardianNewsApi(params?: {
+export async function getFromGNewsApi(params?: {
   query?: string;
   startDate?: string;
   endDate?: string;
