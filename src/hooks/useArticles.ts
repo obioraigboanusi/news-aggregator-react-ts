@@ -40,38 +40,32 @@ const useArticles = () => {
 
   const fetchArticles = async (pageNum: number) => {
     setIsLoading(true);
-    console.log('1');
     try {
       const results = await Promise.allSettled([
         getFromNewsApi({ query, category, to, from, source, page: pageNum }),
         getFromGNewsApi({ query, category, to, from, source, page: pageNum }),
         getFromNYTimes({ query, category, to, from, page: pageNum }),
       ]);
-      console.log(2);
       const successfulResults = results
         .filter((res) => res.status === 'fulfilled')
         .map(
           (res) => (res as PromiseFulfilledResult<any>).value?.articles || []
         );
-      console.log(3);
       const newArticles = successfulResults.flat();
-      console.log(4);
       setArticles((prev) =>
         pageNum === 1 ? newArticles : [...prev, ...newArticles]
       );
       setHasMore(newArticles.length > 0);
-      console.log('first');
     } catch (error) {
       setHasMore(false);
-      console.log('Caught');
     } finally {
       setIsLoading(false);
-      console.log('finalised');
     }
   };
 
   useEffect(() => {
     fetchArticles(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [query, category, to, from, source]);
 
   const loadMore = () => {
