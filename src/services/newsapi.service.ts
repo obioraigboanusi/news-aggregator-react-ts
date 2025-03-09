@@ -66,17 +66,17 @@ export async function getFromNewsApi(params?: {
   category?: string;
 }) {
   const { query: q, startDate: from, category } = params || {};
+  const conditionalFilters = category ? { category } : { sources: 'bbc-news' };
 
   const res = await axiosInstance.get<IApiResponse>('/top-headlines', {
     params: {
       apiKey: import.meta.env.VITE_NEWS_API_KEY,
       sortBy: 'popularity',
-      sources: 'bbc-news',
-      category,
       from,
       q,
       page: 1,
-      pageSize: 20,
+      pageSize: 10,
+      ...conditionalFilters,
     },
   });
 
