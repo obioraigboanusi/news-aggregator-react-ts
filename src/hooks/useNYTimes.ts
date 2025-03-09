@@ -1,10 +1,10 @@
+import { getFromNYTimes } from '@/services/nytimes.service';
 import { useQuery } from '@tanstack/react-query';
-import { getFromGNewsApi } from '@/services/gnews.service';
 
 const useGuardianNews = () =>
   useQuery({
-    queryKey: ['guardian-news'],
-    queryFn: () => getFromGNewsApi(),
+    queryKey: ['ty-times'],
+    queryFn: () => getFromNYTimes(),
   });
 
 export default useGuardianNews;

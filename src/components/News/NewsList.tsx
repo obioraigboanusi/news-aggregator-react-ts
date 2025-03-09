@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import useNewsApi from '../../hooks/useNewsApi';
-import useGNews from '../../hooks/useGNews';
+import useNewsApi from '@/hooks/useNewsApi';
+import useGNews from '@/hooks/useGNews';
 import NewsCard from './NewsCard';
 
 function NewsList() {
