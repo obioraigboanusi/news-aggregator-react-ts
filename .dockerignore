@@ -1,0 +1,8 @@
+node_modules
+dist
+.yarn/cache
+.yarn/unplugged
+.vite
+.DS_Store
+.git
+.vscode

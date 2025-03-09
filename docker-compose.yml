@@ -1,0 +1,6 @@
+version: '3'
+services:
+  vite-app:
+    build: .
+    ports:
+      - '4173:4173'
