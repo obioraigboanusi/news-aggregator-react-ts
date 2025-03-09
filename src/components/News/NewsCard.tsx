@@ -1,3 +1,4 @@
+import { IArticleItem } from '@/utils/querytypes';
 import moment from 'moment';
 
 interface IProps {

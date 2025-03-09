@@ -1,3 +1,4 @@
+import { IArticleItem } from '@/utils/querytypes';
 import axios from 'axios';
 import { snakeCase } from 'lodash';
 
@@ -68,8 +69,9 @@ export async function getFromNewsApi(params?: {
   to?: string;
   category?: string;
   source?: string;
+  page?: number;
 }) {
-  const { query: q, from, to, category, source } = params || {};
+  const { query: q, from, to, category, source, page } = params || {};
   const conditionalFilters = category
     ? { category }
     : { sources: source || 'bbc-news' };
@@ -82,7 +84,7 @@ export async function getFromNewsApi(params?: {
       to,
       q,
       ...conditionalFilters,
-      page: 1,
+      page,
       pageSize: 10,
     },
   });

@@ -7,16 +7,18 @@ const useGuardianNews = ({
   to,
   from,
   source,
+  page,
 }: {
   query?: string;
   category?: string;
   to?: string;
   from?: string;
   source?: string;
+  page?: number;
 }) =>
   useQuery({
-    queryKey: ['guardian-news', { query, category, to, from, source }],
-    queryFn: () => getFromGNewsApi({ query, category, to, from, source }),
+    queryKey: ['guardian-news', { query, category, to, from, source, page }],
+    queryFn: () => getFromGNewsApi({ query, category, to, from, source, page }),
   });
 
 export default useGuardianNews;

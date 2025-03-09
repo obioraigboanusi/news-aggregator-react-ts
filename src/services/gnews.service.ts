@@ -1,3 +1,4 @@
+import { IArticleItem } from '@/utils/querytypes';
 import axios from 'axios';
 import { snakeCase } from 'lodash';
 

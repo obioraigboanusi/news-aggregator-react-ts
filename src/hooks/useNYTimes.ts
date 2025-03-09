@@ -7,16 +7,18 @@ const useNYTimes = ({
   to,
   from,
   enabled,
+  page,
 }: {
   query?: string;
   category?: string;
   to?: string;
   from?: string;
   enabled?: boolean;
+  page?: number;
 }) =>
   useQuery({
-    queryKey: ['ty-times', { query, category, to, from }],
-    queryFn: () => getFromNYTimes({ query, category, to, from }),
+    queryKey: ['ty-times', { query, category, to, from, page }],
+    queryFn: () => getFromNYTimes({ query, category, to, from, page }),
     enabled,
   });
 
