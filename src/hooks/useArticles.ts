@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react';
-import useNewsApi from '@/hooks/useNewsApi';
-import useGNews from '@/hooks/useGNews';
-import useNYTimes from '@/hooks/useNYTimes';
-import { parseAsString, useQueryState, useQueryStates } from 'nuqs';
-import { useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
+import { parseAsString, useQueryState, useQueryStates } from 'nuqs';
 import { getDateRange } from '@/config/timelineMap';
+import { IArticleItem } from '@/utils/querytypes';
+import { getFromGNewsApi } from '@/services/gnews.service';
+import { getFromNYTimes } from '@/services/nytimes.service';
+import { getFromNewsApi } from '@/services/newsapi.service';
 
 const useArticles = () => {
   const [queryValue] = useQueryState('query');
@@ -18,14 +18,15 @@ const useArticles = () => {
   });
 
   const [query, setQuery] = useState<string>();
+  const [articles, setArticles] = useState<IArticleItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const debouncedSetQuery = debounce(setQuery, 500);
+    const debouncedSetQuery = debounce((q) => setQuery(q), 500);
     debouncedSetQuery(queryValue?.trim() || undefined);
-
-    return () => {
-      debouncedSetQuery.cancel();
-    };
+    return () => debouncedSetQuery.cancel();
   }, [queryValue]);
 
   const { to: endDate, from: startDate } = timeline
@@ -37,43 +38,53 @@ const useArticles = () => {
   const from = startDate || undefined;
   const source = sourceValue || undefined;
 
-  const { data, isLoading: isNewsApiLoading } = useNewsApi({
-    query,
-    category,
-    to,
-    from,
-    source,
-  });
-
-  const { data: gData, isLoading: isGNewsLoading } = useGNews({
-    query,
-    category,
-    to,
-    from,
-    source,
-  });
-
-  const { data: nytData, isLoading: isNyTimesLoading } = useNYTimes({
-    query,
-    category,
-    to,
-    from,
-    enabled: !source || source === 'ny-times',
-  });
-
-  const articles = useMemo(
-    () => [
-      ...(data?.articles || []),
-      ...(gData?.articles || []),
-      ...(nytData?.articles || []),
-    ],
-    [data?.articles, gData?.articles, nytData?.articles]
-  );
-
-  return {
-    articles,
-    isLoading: isGNewsLoading || isNewsApiLoading || isNyTimesLoading,
+  const fetchArticles = async (pageNum: number) => {
+    setIsLoading(true);
+    console.log('1');
+    try {
+      const results = await Promise.allSettled([
+        getFromNewsApi({ query, category, to, from, source, page: pageNum }),
+        getFromGNewsApi({ query, category, to, from, source, page: pageNum }),
+        getFromNYTimes({ query, category, to, from, page: pageNum }),
+      ]);
+      console.log(2);
+      const successfulResults = results
+        .filter((res) => res.status === 'fulfilled')
+        .map(
+          (res) => (res as PromiseFulfilledResult<any>).value?.articles || []
+        );
+      console.log(3);
+      const newArticles = successfulResults.flat();
+      console.log(4);
+      setArticles((prev) =>
+        pageNum === 1 ? newArticles : [...prev, ...newArticles]
+      );
+      setHasMore(newArticles.length > 0);
+      console.log('first');
+    } catch (error) {
+      setHasMore(false);
+      console.log('Caught');
+    } finally {
+      setIsLoading(false);
+      console.log('finalised');
+    }
   };
+
+  useEffect(() => {
+    fetchArticles(1);
+  }, [query, category, to, from, source]);
+
+  const loadMore = () => {
+    if (!isLoading && hasMore) {
+      setPage((prevPage) => {
+        const nextPage = prevPage + 1;
+        fetchArticles(nextPage);
+        return nextPage;
+      });
+    }
+  };
+
+  return { articles, isLoading, loadMore, hasMore };
 };
 
 export default useArticles;
