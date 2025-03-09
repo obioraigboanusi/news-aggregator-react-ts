@@ -37,7 +37,7 @@ const useArticles = () => {
   const from = startDate || undefined;
   const source = sourceValue || undefined;
 
-  const { data } = useNewsApi({
+  const { data, isLoading: isNewsApiLoading } = useNewsApi({
     query,
     category,
     to,
@@ -45,7 +45,7 @@ const useArticles = () => {
     source,
   });
 
-  const { data: gData } = useGNews({
+  const { data: gData, isLoading: isGNewsLoading } = useGNews({
     query,
     category,
     to,
@@ -53,7 +53,7 @@ const useArticles = () => {
     source,
   });
 
-  const { data: nytData } = useNYTimes({
+  const { data: nytData, isLoading: isNyTimesLoading } = useNYTimes({
     query,
     category,
     to,
@@ -70,7 +70,10 @@ const useArticles = () => {
     [data?.articles, gData?.articles, nytData?.articles]
   );
 
-  return { articles, isLoading: false };
+  return {
+    articles,
+    isLoading: isGNewsLoading || isNewsApiLoading || isNyTimesLoading,
+  };
 };
 
 export default useArticles;

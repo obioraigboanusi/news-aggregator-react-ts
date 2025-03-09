@@ -1,8 +1,18 @@
 import useArticles from '@/hooks/useArticles';
 import NewsCard from './NewsCard';
+import ArticleCardLoader from '../ArticleCardLoader';
 
 function NewsList() {
-  const { articles } = useArticles();
+  const { articles, isLoading } = useArticles();
+  if (isLoading) {
+    return (
+      <ul>
+        {Array.from({ length: 10 }).map((item, i) => (
+          <ArticleCardLoader key={'loader' + i} />
+        ))}
+      </ul>
+    );
+  }
   return (
     <div>
       <ul>
