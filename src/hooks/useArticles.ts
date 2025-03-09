@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { debounce } from 'lodash';
 import { parseAsString, useQueryState, useQueryStates } from 'nuqs';
 import { getDateRange } from '@/config/timelineMap';
@@ -19,7 +19,8 @@ const useArticles = () => {
 
   const [query, setQuery] = useState<string>();
   const [articles, setArticles] = useState<IArticleItem[]>([]);
-  const [page, setPage] = useState(1);
+  const [, setPage] = useState(1);
+  const [, setError] = useState<any>();
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,6 +58,7 @@ const useArticles = () => {
       );
       setHasMore(newArticles.length > 0);
     } catch (error) {
+      setError(error);
       setHasMore(false);
     } finally {
       setIsLoading(false);
