@@ -21,14 +21,24 @@ function NewsCard({ item }: IProps) {
             <p className="text-sm">{item.source}</p>
             <p className="text-sm capitalize">{item.category}</p>
           </div>
-          <h3 className="font-bold leading-tight text-lg md:text-xl lg:text-xl">
-            {item.title}
-          </h3>
+          <a href={item.url} target="_blank" rel="noopener noreferrer">
+            <h3 className="font-bold leading-tight text-lg md:text-xl lg:text-xl hover:text-purple-500">
+              {item.title}
+            </h3>
+          </a>
         </div>
         <div className="flex gap-2 items-center text-sm">
           <p className="mb-0">{moment(item.publishedAt).fromNow()}</p>
-          <div className="bg-gray-600 h-2 w-2 rounded-full" />
-          <p>By {item.author}</p>
+          {item.author && (
+            <>
+              <div className="bg-gray-600 h-2 w-2 rounded-full" />
+              <p>
+                {item.author?.includes('By')
+                  ? item.author
+                  : 'By ' + item.author}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>

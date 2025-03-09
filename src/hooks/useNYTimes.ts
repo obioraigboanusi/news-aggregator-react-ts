@@ -1,10 +1,10 @@
 import { getFromNYTimes } from '@/services/nytimes.service';
 import { useQuery } from '@tanstack/react-query';
 
-const useGuardianNews = () =>
+const useNYTimes = () =>
   useQuery({
     queryKey: ['ty-times'],
     queryFn: () => getFromNYTimes(),
   });
 
-export default useGuardianNews;
+export default useNYTimes;
