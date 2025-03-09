@@ -1,10 +1,13 @@
+import useGeArticlesFromNewsApi from '../../hooks/useGeArticlesFromNewsApi';
 import NewsCard from './NewsCard';
 
 function NewsList() {
+  const { data, isLoading } = useGeArticlesFromNewsApi();
+
   return (
     <div>
       <ul>
-        {[].map((item: IArticleItem) => (
+        {data?.articles?.map((item: IArticleItem) => (
           <li key={item.id}>
             <NewsCard item={item} />
           </li>
