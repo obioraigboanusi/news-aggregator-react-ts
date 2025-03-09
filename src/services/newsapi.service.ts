@@ -62,10 +62,11 @@ axiosInstance.interceptors.response.use(
 
 export async function getFromNewsApi(params?: {
   query?: string;
-  startDate?: string;
+  from?: string;
+  to?: string;
   category?: string;
 }) {
-  const { query: q, startDate: from, category } = params || {};
+  const { query: q, from, to, category } = params || {};
   const conditionalFilters = category ? { category } : { sources: 'bbc-news' };
 
   const res = await axiosInstance.get<IApiResponse>('/top-headlines', {
@@ -73,6 +74,7 @@ export async function getFromNewsApi(params?: {
       apiKey: import.meta.env.VITE_NEWS_API_KEY,
       sortBy: 'popularity',
       from,
+      to,
       q,
       page: 1,
       pageSize: 10,

@@ -1,14 +1,18 @@
 import SearchForm from '@/components/SearchForm';
-import NewsList from '@/components/News/NewsList';
 import CategoryFilter from '@/components/CategoryFilter';
+import DateFilters from '@/components/DateFilters';
 
 function Home() {
   return (
-    <section>
-      <div className="border-b border-gray-200">
-        <div className="container  py-20">
-          <h1>Home</h1>
-          <p>Welcome to the home page</p>
+    <section className="">
+      <div className="border-b border-gray-200 bg-gray-100">
+        <div className="container mx-auto py-20 text-center ">
+          <h1 className="text-4xl font-bold text-gray-900 ">
+            World News in One Place
+          </h1>
+          <p className="mt-4 text-lg text-gray-600">
+            Your lens into global happenings.
+          </p>
         </div>
         <div className="container py-4">
           <CategoryFilter />
@@ -32,13 +36,17 @@ function Home() {
             </div>
           </div>
 
-          <NewsList />
+          {/* <NewsList /> */}
         </div>
         <aside className="w-[400px] hidden lg:block border-l border-gray-200 pl-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-          vitae, corrupti animi culpa quaerat dolorem quo tempora ipsum magnam
-          ex ab, et iste repellat iure numquam est? Voluptatibus, architecto
-          necessitatibus?
+          <div className="py-5  ">
+            <h3 className="text-xl font-semibold mb-5">Filters</h3>
+
+            <div className="border rounded border-gray-200 p-4">
+              <h4 className="mb-4">Time ranges</h4>
+              <DateFilters />
+            </div>
+          </div>
         </aside>
       </div>
     </section>

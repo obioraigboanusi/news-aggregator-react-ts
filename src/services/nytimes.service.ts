@@ -122,16 +122,16 @@ axiosInstance.interceptors.response.use(
 
 export async function getFromNYTimes(params?: {
   query?: string;
-  startDate?: string;
-  endDate?: string;
+  from?: string;
+  to?: string;
   size?: number;
   page?: number;
   category?: string;
 }) {
   const {
     query: q,
-    //     startDate: from,
-    //     endDate: to,
+    to,
+    from,
     //     size: max,
     //     page,
     category,
@@ -144,8 +144,8 @@ export async function getFromNYTimes(params?: {
       category,
       //       //       sortBy: 'popularity',
       //       //       sources: 'bbc-news',
-      //       from,
-      //       to,
+      from,
+      to,
       q,
       //       page,
       //       max,

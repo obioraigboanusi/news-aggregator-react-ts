@@ -60,20 +60,13 @@ axiosInstance.interceptors.response.use(
 
 export async function getFromGNewsApi(params?: {
   query?: string;
-  startDate?: string;
-  endDate?: string;
+  from?: string;
+  to?: string;
   size?: number;
   page?: number;
   category?: string;
 }) {
-  const {
-    query: q,
-    startDate: from,
-    endDate: to,
-    size: max,
-    page,
-    category,
-  } = params || {};
+  const { query: q, from, to, size: max, page, category } = params || {};
   console.log({ key: import.meta.env.VITE_GNEWS_API_KEY });
   const res = await axiosInstance.get<IApiResponse>('/top-headlines', {
     params: {
