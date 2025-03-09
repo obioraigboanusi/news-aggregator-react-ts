@@ -55,7 +55,7 @@ function Home() {
           </div>
           <aside
             className={clsx(
-              'w-[400px] lg:block border-l border-gray-200 pl-5 bg-gray-100',
+              'w-[400px] lg:block border-l border-gray-200 px-5 bg-gray-100',
               isFilterOpen
                 ? 'block absolute lg:static right-0 lg:right-auto top-[59px]'
                 : 'hidden'
