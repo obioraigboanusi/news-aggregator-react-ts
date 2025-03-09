@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { getFromNewsApi } from '../services/newsapi.service';
 
-const useGeArticlesFromNewsApi = () =>
+const useGetArticlesFromNewsApi = () =>
   useQuery({
-    queryKey: ['todos'],
+    queryKey: ['news-api'],
     queryFn: () => getFromNewsApi(),
   });
 
-export default useGeArticlesFromNewsApi;
+export default useGetArticlesFromNewsApi;

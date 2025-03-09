@@ -2,23 +2,21 @@ import axios from 'axios';
 import { snakeCase } from 'lodash';
 
 interface IApiResponse {
-  status: string;
-  totalResults: number;
+  totalArticles: number;
   articles: IArticleItem[];
 }
 
 interface IArticleResponse {
-  source: {
-    id: string;
-    name: string;
-  };
-  author: string;
   title: string;
   description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
   content: string;
+  url: string;
+  image: string;
+  publishedAt: string;
+  source: {
+    name: string;
+    url: string;
+  };
 }
 
 function transformArticle(item: IArticleResponse): IArticleItem {
@@ -29,15 +27,15 @@ function transformArticle(item: IArticleResponse): IArticleItem {
     publishedAt: item.publishedAt,
     source: item.source.name,
     category: 'general',
-    bannerUrl: item.urlToImage,
-    author: item.author,
+    bannerUrl: item.image,
+    author: null,
     url: item.url,
     content: item.content,
   };
 }
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_NEWS_API_URL,
+  baseURL: import.meta.env.VITE_GNEWS_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -52,7 +50,7 @@ axiosInstance.interceptors.response.use(
     return { ...response.data, articles };
   },
   (error) => {
-    console.error('API Error:', error?.response?.data || error.message);
+    //     console.error('API Error:', error?.response?.data || error.message);
 
     return Promise.reject(
       error.response?.data || { message: 'Something went wrong' }
@@ -60,21 +58,35 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export async function getFromNewsApi(params?: {
+export async function getFromGuardianNewsApi(params?: {
   query?: string;
   startDate?: string;
+  endDate?: string;
+  size?: number;
+  page?: number;
+  category?: string;
 }) {
-  const { query: q, startDate: from } = params || {};
-
+  const {
+    query: q,
+    startDate: from,
+    endDate: to,
+    size: max,
+    page,
+    category,
+  } = params || {};
+  console.log({ key: import.meta.env.VITE_GNEWS_API_KEY });
   const res = await axiosInstance.get<IApiResponse>('/top-headlines', {
     params: {
-      apiKey: import.meta.env.VITE_NEWS_API_KEY,
-      sortBy: 'popularity',
-      sources: 'bbc-news',
+      apikey: import.meta.env.VITE_GNEWS_API_KEY,
+      lang: 'en',
+      category,
+      //       sortBy: 'popularity',
+      //       sources: 'bbc-news',
       from,
+      to,
       q,
-      page: 1,
-      pageSize: 20,
+      page,
+      max,
     },
   });
 

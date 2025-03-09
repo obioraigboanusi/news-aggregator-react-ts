@@ -6,7 +6,7 @@ interface IArticleItem {
   source: string;
   category: string;
   bannerUrl: string;
-  author: string;
+  author: string | null;
   url: string;
   content: string;
 }
