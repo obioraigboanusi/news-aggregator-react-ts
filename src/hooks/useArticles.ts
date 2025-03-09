@@ -26,28 +26,35 @@ const useArticles = () => {
       debouncedSetQuery.cancel();
     };
   }, [queryValue]);
-  const { to, from } = timeline ? getDateRange(timeline) : timeRange;
+
+  const { to: endDate, from: startDate } = timeline
+    ? getDateRange(timeline)
+    : timeRange;
 
   const category = categoryValue || undefined;
+  const to = endDate || undefined;
+  const from = startDate || undefined;
+  console.log({ to, from });
 
   const { data } = useNewsApi({
-    query: query || undefined,
-    category: category || undefined,
-    to: to || undefined,
-    from: from || undefined,
+    query,
+    category,
+    to,
+    from,
   });
 
   const { data: gData } = useGNews({
-    query: query || undefined,
-    category: category || undefined,
-    to: to || undefined,
-    from: from || undefined,
+    query,
+    category,
+    to,
+    from,
   });
+
   const { data: nytData } = useNYTimes({
-    query: query || undefined,
-    category: category || undefined,
-    to: to || undefined,
-    from: from || undefined,
+    query,
+    category,
+    to,
+    from,
   });
 
   const articles = useMemo(

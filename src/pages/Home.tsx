@@ -1,6 +1,7 @@
 import SearchForm from '@/components/SearchForm';
 import CategoryFilter from '@/components/CategoryFilter';
 import DateFilters from '@/components/DateFilters';
+import NewsList from '@/components/News/NewsList';
 
 function Home() {
   return (
@@ -36,7 +37,7 @@ function Home() {
             </div>
           </div>
 
-          {/* <NewsList /> */}
+          <NewsList />
         </div>
         <aside className="w-[400px] hidden lg:block border-l border-gray-200 pl-5">
           <div className="py-5  ">

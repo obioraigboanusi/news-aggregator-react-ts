@@ -19,7 +19,7 @@ function NewsCard({ item }: IProps) {
         <div>
           <div className="flex justify-between items-center">
             <p className="text-sm">{item.source}</p>
-            <p className="text-sm capitalize">{item.category}</p>
+            {/* <p className="text-sm capitalize">{item.category}</p> */}
           </div>
           <a href={item.url} target="_blank" rel="noopener noreferrer">
             <h3 className="font-bold leading-tight text-lg md:text-xl lg:text-xl hover:text-purple-500">
