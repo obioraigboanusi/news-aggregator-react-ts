@@ -74,7 +74,7 @@ function transformArticle(item: IArticleItemRaw): IArticleItem {
     id: item._id,
     title: item.headline.main,
     publishedAt: item.pub_date,
-    source: 'New York Times',
+    source: item.source,
     category: 'general',
     bannerUrl:
       'https://www.nytimes.com/' +
@@ -91,19 +91,6 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-interface IArticleItem {
-  id: string;
-  title: string;
-  description?: string;
-  publishedAt: string;
-  source: string;
-  category: string;
-  bannerUrl: string;
-  author: string;
-  url: string;
-  content?: string;
-}
 
 axiosInstance.interceptors.response.use(
   ({ data }) => {
@@ -136,7 +123,7 @@ export async function getFromNYTimes(params?: {
     //     page,
     category,
   } = params || {};
-  //   console.log({ key: import.meta.env.VITE_GNEWS_API_KEY });
+
   const res = await axiosInstance.get<IApiResponse>('', {
     params: {
       'api-key': import.meta.env.VITE_NYTIMES_API_KEY,

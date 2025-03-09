@@ -11,6 +11,7 @@ const useArticles = () => {
   const [queryValue] = useQueryState('query');
   const [categoryValue] = useQueryState('category');
   const [timeline] = useQueryState('timeline');
+  const [sourceValue] = useQueryState('source');
   const [timeRange] = useQueryStates({
     to: parseAsString,
     from: parseAsString,
@@ -34,13 +35,14 @@ const useArticles = () => {
   const category = categoryValue || undefined;
   const to = endDate || undefined;
   const from = startDate || undefined;
-  console.log({ to, from });
+  const source = sourceValue || undefined;
 
   const { data } = useNewsApi({
     query,
     category,
     to,
     from,
+    source,
   });
 
   const { data: gData } = useGNews({
@@ -48,6 +50,7 @@ const useArticles = () => {
     category,
     to,
     from,
+    source,
   });
 
   const { data: nytData } = useNYTimes({
@@ -55,6 +58,7 @@ const useArticles = () => {
     category,
     to,
     from,
+    enabled: !source || source === 'ny-times',
   });
 
   const articles = useMemo(

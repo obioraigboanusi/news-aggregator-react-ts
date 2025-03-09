@@ -45,6 +45,10 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => {
+    if (response.config.url === '/top-headlines/sources') {
+      return response.data.sources;
+    }
+
     const articles = response?.data?.articles?.map((item: IArticleResponse) =>
       transformArticle(item)
     );
@@ -52,8 +56,6 @@ axiosInstance.interceptors.response.use(
     return { ...response.data, articles };
   },
   (error) => {
-    console.error('API Error:', error?.response?.data || error.message);
-
     return Promise.reject(
       error.response?.data || { message: 'Something went wrong' }
     );
@@ -65,9 +67,12 @@ export async function getFromNewsApi(params?: {
   from?: string;
   to?: string;
   category?: string;
+  source?: string;
 }) {
-  const { query: q, from, to, category } = params || {};
-  const conditionalFilters = category ? { category } : { sources: 'bbc-news' };
+  const { query: q, from, to, category, source } = params || {};
+  const conditionalFilters = category
+    ? { category }
+    : { sources: source || 'bbc-news' };
 
   const res = await axiosInstance.get<IApiResponse>('/top-headlines', {
     params: {
@@ -76,11 +81,29 @@ export async function getFromNewsApi(params?: {
       from,
       to,
       q,
+      ...conditionalFilters,
       page: 1,
       pageSize: 10,
-      ...conditionalFilters,
     },
   });
 
   return res as unknown as IApiResponse;
+}
+
+interface IOption {
+  id: string;
+  name: string;
+}
+export async function getSources(params?: { category?: string }) {
+  const { category } = params || {};
+  const res = await axiosInstance.get<IOption[]>('/top-headlines/sources', {
+    params: {
+      apiKey: import.meta.env.VITE_NEWS_API_KEY,
+      category,
+      page: 1,
+      pageSize: 10,
+    },
+  });
+
+  return res as unknown as IOption[];
 }

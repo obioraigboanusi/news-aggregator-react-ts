@@ -65,16 +65,25 @@ export async function getFromGNewsApi(params?: {
   size?: number;
   page?: number;
   category?: string;
+  source?: string;
 }) {
-  const { query: q, from, to, size: max, page, category } = params || {};
-  console.log({ key: import.meta.env.VITE_GNEWS_API_KEY });
+  const {
+    query: q,
+    from,
+    to,
+    size: max,
+    page,
+    category,
+    source: sources,
+  } = params || {};
+
   const res = await axiosInstance.get<IApiResponse>('/top-headlines', {
     params: {
       apikey: import.meta.env.VITE_GNEWS_API_KEY,
       lang: 'en',
       category,
       //       sortBy: 'popularity',
-      //       sources: 'bbc-news',
+      sources,
       from,
       to,
       q,

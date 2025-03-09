@@ -6,15 +6,17 @@ const useNewsApi = ({
   category,
   to,
   from,
+  source,
 }: {
   query?: string;
   category?: string;
   to?: string;
   from?: string;
+  source?: string;
 }) =>
   useQuery({
-    queryKey: ['news-api', { query, category, to, from }],
-    queryFn: () => getFromNewsApi({ query, category, to, from }),
+    queryKey: ['news-api', { query, category, to, from, source }],
+    queryFn: () => getFromNewsApi({ query, category, to, from, source }),
   });
 
 export default useNewsApi;

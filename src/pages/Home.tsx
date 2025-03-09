@@ -2,8 +2,12 @@ import SearchForm from '@/components/SearchForm';
 import CategoryFilter from '@/components/CategoryFilter';
 import DateFilters from '@/components/DateFilters';
 import NewsList from '@/components/News/NewsList';
+import SourcesFilter from '@/components/SourcesFilter';
+import { useQueryState } from 'nuqs';
 
 function Home() {
+  const [categoryValue] = useQueryState('category');
+
   return (
     <section className="">
       <div className="border-b border-gray-200 bg-gray-100">
@@ -40,12 +44,26 @@ function Home() {
           <NewsList />
         </div>
         <aside className="w-[400px] hidden lg:block border-l border-gray-200 pl-5">
-          <div className="py-5  ">
-            <h3 className="text-xl font-semibold mb-5">Filters</h3>
+          <div className="py-5 space-y-5 ">
+            <h3 className="text-xl font-semibold">Filters</h3>
 
             <div className="border rounded border-gray-200 p-4">
               <h4 className="mb-4">Time ranges</h4>
               <DateFilters />
+            </div>
+            <div className="border rounded border-gray-200 p-4">
+              <h4 className="mb-4">
+                Sources
+                {categoryValue && (
+                  <>
+                    <span className="ml-1">in</span>
+                    <span className="font-medium capitalize ml-1">
+                      {categoryValue}
+                    </span>
+                  </>
+                )}
+              </h4>
+              <SourcesFilter />
             </div>
           </div>
         </aside>
